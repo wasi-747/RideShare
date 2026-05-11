@@ -1,147 +1,189 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Image from "next/image";
 import Link from "next/link";
-import { Search, MapPin, Map, ShieldCheck, CreditCard, Clock } from "lucide-react";
+import {
+  MapPin,
+  Plus,
+  MessageCircle,
+  User,
+  Home,
+  Search as SearchIcon,
+} from "lucide-react";
 
 export default function HomePage() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-gray-50 selection:bg-red-200">
-        
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-white pb-16 pt-20 lg:pb-32 lg:pt-28 border-b border-gray-100">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute right-0 top-0 hidden h-full w-[60%] lg:block bg-red-50 rounded-bl-[150px] overflow-hidden">
-               <Image 
-                 src="/hero-bg.png" 
-                 alt="Hero background" 
-                 fill 
-                 className="object-cover object-center opacity-90 transition-transform duration-[15s] hover:scale-105"
-                 priority
-               />
+    <div className="min-h-screen bg-white pb-20">
+      {/* Mobile Header */}
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <div className="font-bold text-xl text-red-600">RideShare</div>
+          <div className="flex gap-2">
+            <Link
+              href="/profile"
+              className="p-2 hover:bg-gray-100 rounded-lg transition"
+            >
+              <User size={24} className="text-gray-600" />
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-2xl mx-auto px-4">
+        {/* Search Bar */}
+        <div className="mt-6 mb-6">
+          <Link
+            href="/rides/search"
+            className="w-full flex items-center gap-3 bg-gray-100 hover:bg-gray-200 transition p-4 rounded-2xl"
+          >
+            <SearchIcon size={20} className="text-gray-500" />
+            <span className="text-gray-500">Where to?</span>
+          </Link>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <Link
+            href="/rides/search"
+            className="bg-red-600 hover:bg-red-700 text-white rounded-2xl p-6 flex flex-col items-center justify-center gap-3 transition transform hover:scale-105 shadow-lg"
+          >
+            <MapPin size={32} />
+            <span className="font-bold text-lg">Find a Ride</span>
+            <span className="text-sm text-red-100">Request now</span>
+          </Link>
+
+          <Link
+            href="/rides/post"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-6 flex flex-col items-center justify-center gap-3 transition transform hover:scale-105 shadow-lg"
+          >
+            <Plus size={32} />
+            <span className="font-bold text-lg">Offer a Ride</span>
+            <span className="text-sm text-blue-100">Earn money</span>
+          </Link>
+        </div>
+
+        {/* Active Ride Card */}
+        <section className="mb-8">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">
+            Your Active Ride
+          </h2>
+          <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
+            <div className="text-center">
+              <p className="text-gray-600 mb-2">No active ride at the moment</p>
+              <Link
+                href="/rides/search"
+                className="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition"
+              >
+                Find a Ride
+              </Link>
             </div>
           </div>
-          
-          <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="lg:w-1/2 lg:pr-12">
-              <h1 className="text-5xl font-black tracking-tight text-gray-900 sm:text-6xl xl:text-7xl mb-6">
-                Go anywhere with <br/> 
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-500">RideShare</span>
-              </h1>
-              <p className="mt-4 text-lg text-gray-600 sm:text-xl max-w-xl mb-10 leading-relaxed font-medium">
-                Request a ride, hop in, and go. Connecting university students through safe, verified, and affordable carpooling.
-              </p>
-              
-              {/* Ride Request Widget */}
-              <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 border border-gray-100 mt-8 max-w-md transform transition hover:-translate-y-1 duration-300">
-                <div className="flex bg-gray-100 rounded-xl p-1 mb-6 max-w-fit">
-                  <button className="bg-white px-6 py-2 rounded-lg font-bold text-sm shadow-sm text-gray-900">Ride</button>
-                  <button className="px-6 py-2 rounded-lg font-semibold text-sm text-gray-500 hover:text-gray-900 transition">Drive</button>
-                </div>
-                
-                <div className="space-y-4 relative">
-                  <div className="absolute left-[20px] top-[24px] bottom-[28px] w-[2px] bg-gray-200 z-0"></div>
-                  
-                  <div className="relative z-10 flex items-center">
-                    <div className="bg-gray-100 p-2 rounded-full mr-4 border-[3px] border-white shadow-sm shrink-0">
-                      <div className="w-2 h-2 rounded-full bg-gray-900"></div>
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="Pickup location" 
-                      className="w-full bg-gray-50 border-none rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-red-500 focus:bg-white transition text-gray-900 placeholder:text-gray-400 font-medium"
-                    />
-                  </div>
-                  
-                  <div className="relative z-10 flex items-center">
-                    <div className="bg-red-100 p-2 rounded-full mr-4 border-[3px] border-white shadow-sm shrink-0">
-                      <MapPin size={10} className="text-red-600" fill="currentColor" />
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="Dropoff destination" 
-                      className="w-full bg-gray-50 border-none rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-red-500 focus:bg-white transition text-gray-900 placeholder:text-gray-400 font-medium"
-                    />
-                  </div>
-                </div>
+        </section>
 
-                <Link href="/rides/search" className="mt-6 w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold transition text-lg shadow-lg shadow-gray-200">
-                  <Search size={20} /> See prices
-                </Link>
+        {/* Recent Rides */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-gray-900">Recent Rides</h2>
+            <Link
+              href="/dashboard"
+              className="text-red-600 hover:text-red-700 text-sm font-semibold"
+            >
+              See all
+            </Link>
+          </div>
+          <div className="space-y-3">
+            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-gray-200 transition">
+              <div className="flex gap-3">
+                <div className="bg-blue-100 rounded-lg p-2 h-fit">
+                  <MapPin size={20} className="text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-gray-900">No recent rides</p>
+                  <p className="text-sm text-gray-500">
+                    Your rides will appear here
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-400">--</p>
+                </div>
               </div>
             </div>
-            
-            {/* Mobile Hero Image */}
-            <div className="mt-12 lg:hidden w-full h-64 relative rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-               <Image 
-                 src="/hero-bg.png" 
-                 alt="Hero background" 
-                 fill 
-                 className="object-cover"
-               />
-            </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section id="features" className="py-24 bg-gray-50">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-             <div className="text-center max-w-3xl mx-auto mb-16">
-               <h2 className="text-3xl font-black text-gray-900 sm:text-4xl mb-4">Why choose RideShare?</h2>
-               <p className="text-lg text-gray-600 font-medium">We've built the most reliable platform for university students to travel safely and affordably.</p>
-             </div>
-             
-             <div className="grid md:grid-cols-3 gap-10">
-                <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-red-100 transition-all duration-300 transform hover:-translate-y-2 group">
-                  <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors duration-300">
-                    <ShieldCheck size={32} className="text-red-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Verified Safety</h3>
-                  <p className="text-gray-600 leading-relaxed font-medium">All users are verified with university emails. Share rides exclusively within your trusted campus community.</p>
-                </div>
-                
-                <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-red-100 transition-all duration-300 transform hover:-translate-y-2 group">
-                  <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors duration-300">
-                    <CreditCard size={32} className="text-red-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Affordable Fares</h3>
-                  <p className="text-gray-600 leading-relaxed font-medium">Split the cost of gas and tolls. Save money compared to traditional ride-hailing services on every single trip.</p>
-                </div>
-                
-                <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-red-100 transition-all duration-300 transform hover:-translate-y-2 group">
-                  <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors duration-300">
-                    <Clock size={32} className="text-red-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Flexible Scheduling</h3>
-                  <p className="text-gray-600 leading-relaxed font-medium">Find rides that match your class schedule perfectly. Post or request a ride minutes or days in advance.</p>
-                </div>
-             </div>
-          </div>
-        </section>
-
-        {/* CTA Section for Drivers */}
-        <section className="bg-red-600 py-24 relative overflow-hidden">
-          <div className="absolute -right-20 -top-20 opacity-10">
-             <Map size={400} />
-          </div>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-2/3 mb-10 md:mb-0">
-               <h2 className="text-4xl font-black text-white mb-4 leading-tight">Drive when you want, <br/>make what you need.</h2>
-               <p className="text-red-100 text-lg max-w-xl font-medium">
-                 Earn money splitting costs on routes you already take. No strict schedules, no commitments. Just you, your car, and your terms.
-               </p>
+        {/* Features Highlights */}
+        <section className="mb-8">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">
+            Why RideShare?
+          </h2>
+          <div className="space-y-3">
+            <div className="flex gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="text-2xl">🛡️</div>
+              <div>
+                <p className="font-semibold text-gray-900">Verified Students</p>
+                <p className="text-sm text-gray-500">
+                  All users verified with university emails
+                </p>
+              </div>
             </div>
-            <div className="md:w-1/3 flex justify-end">
-               <Link href="/auth/register" className="bg-white text-red-600 hover:bg-gray-50 px-8 py-4 rounded-xl font-bold text-lg shadow-2xl transition transform hover:scale-105 border border-white">
-                 Get started
-               </Link>
+
+            <div className="flex gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="text-2xl">💰</div>
+              <div>
+                <p className="font-semibold text-gray-900">Affordable Fares</p>
+                <p className="text-sm text-gray-500">
+                  Split costs and save money every trip
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="text-2xl">⭐</div>
+              <div>
+                <p className="font-semibold text-gray-900">Rated Drivers</p>
+                <p className="text-sm text-gray-500">
+                  Choose from top-rated community drivers
+                </p>
+              </div>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 py-3">
+        <div className="max-w-2xl mx-auto flex justify-around">
+          <Link
+            href="/"
+            className="flex flex-col items-center gap-1 text-red-600"
+          >
+            <Home size={24} />
+            <span className="text-xs font-semibold">Home</span>
+          </Link>
+
+          <Link
+            href="/rides/search"
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition"
+          >
+            <SearchIcon size={24} />
+            <span className="text-xs font-semibold">Search</span>
+          </Link>
+
+          <Link
+            href="/dashboard"
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition"
+          >
+            <MessageCircle size={24} />
+            <span className="text-xs font-semibold">Rides</span>
+          </Link>
+
+          <Link
+            href="/profile"
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition"
+          >
+            <User size={24} />
+            <span className="text-xs font-semibold">Profile</span>
+          </Link>
+        </div>
+      </nav>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import { Car, MapPin, Navigation, Search, Shield } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 
 export default function RideSearchPage() {
-  const [femaleOnly, setFemaleOnly] = useState(true);
+  const [femaleOnly, setFemaleOnly] = useState(false);
 
   return (
     <div className="mobile-shell flex flex-col bg-[#F5F5F5]">
@@ -16,7 +16,9 @@ export default function RideSearchPage() {
           <div className="bg-brand rounded-lg p-1.5">
             <Car size={18} className="text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-lg font-black text-brand tracking-tight">RideShare</span>
+          <span className="text-lg font-black text-brand tracking-tight">
+            RideShare
+          </span>
         </div>
         <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-100">
           <img
@@ -31,9 +33,13 @@ export default function RideSearchPage() {
         {/* Hero */}
         <section className="px-5 pt-5 pb-4 bg-white mb-2">
           <h1 className="text-[2rem] font-black text-gray-900 leading-tight mb-1">
-            Find Your<br />Velocity
+            Find Your
+            <br />
+            Velocity
           </h1>
-          <p className="text-sm text-gray-400">Safe, community-driven academic transit.</p>
+          <p className="text-sm text-gray-400">
+            Safe, community-driven academic transit.
+          </p>
         </section>
 
         {/* Search form */}
@@ -41,33 +47,55 @@ export default function RideSearchPage() {
           <div className="rs-card p-4 space-y-3">
             {/* Departure */}
             <div>
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Departure</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                Departure
+              </label>
               <div className="flex items-center gap-2.5 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5">
                 <MapPin size={15} className="text-brand flex-shrink-0" />
-                <input className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder-gray-400" defaultValue="Campus Gate A" />
+                <input
+                  className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder-gray-400"
+                  defaultValue="Campus Gate A"
+                />
               </div>
             </div>
             {/* Destination */}
             <div>
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Destination</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                Destination
+              </label>
               <div className="flex items-center gap-2.5 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5">
                 <Navigation size={15} className="text-brand flex-shrink-0" />
-                <input className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder-gray-400" defaultValue="Science Park" />
+                <input
+                  className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder-gray-400"
+                  defaultValue="Science Park"
+                />
               </div>
             </div>
             {/* Safety filter */}
             <div>
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Safety Filter</label>
-              <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                Safety Filter
+              </label>
+              <div className="flex items-center justify-between bg-gray-50 rounded-xl border border-gray-200 px-4 py-3">
                 <div className="flex items-center gap-2">
-                  <Shield size={15} className="text-brand" />
-                  <span className="text-sm font-medium text-gray-800">Female Only</span>
+                  <Shield size={15} className="text-brand flex-shrink-0" />
+                  <span className="text-sm font-medium text-gray-700">
+                    Female Only
+                  </span>
                 </div>
                 <button
                   onClick={() => setFemaleOnly(!femaleOnly)}
-                  className={`relative w-11 h-6 rounded-full transition-colors ${femaleOnly ? "bg-brand" : "bg-gray-300"}`}
+                  className={`relative w-12 h-6 rounded-full transition-colors ${
+                    femaleOnly ? "bg-red-500" : "bg-gray-300"
+                  }`}
+                  role="switch"
+                  aria-checked={femaleOnly}
                 >
-                  <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${femaleOnly ? "translate-x-5" : "translate-x-0.5"}`} />
+                  <div
+                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${
+                      femaleOnly ? "translate-x-6" : "translate-x-0"
+                    }`}
+                  />
                 </button>
               </div>
             </div>
@@ -90,18 +118,26 @@ export default function RideSearchPage() {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-base font-black text-gray-900">Elena Rodriguez</p>
+                  <p className="text-base font-black text-gray-900">
+                    Elena Rodriguez
+                  </p>
                   <div className="flex items-center gap-1 mt-0.5">
                     <span className="text-yellow-400 text-xs">★</span>
                     <span className="text-xs font-bold text-gray-700">4.9</span>
-                    <span className="text-xs text-brand font-semibold">• Verified Student</span>
+                    <span className="text-xs text-brand font-semibold">
+                      • Verified Student
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-[10px] font-black text-white bg-brand px-2 py-0.5 rounded-full mb-1 text-center">FEMALE ONLY</div>
+                <div className="text-[10px] font-black text-white bg-brand px-2 py-0.5 rounded-full mb-1 text-center">
+                  FEMALE ONLY
+                </div>
                 <p className="text-xl font-black text-gray-900">$12</p>
-                <p className="text-[10px] text-gray-400 uppercase font-bold">Per Seat</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold">
+                  Per Seat
+                </p>
               </div>
             </div>
 
@@ -115,11 +151,15 @@ export default function RideSearchPage() {
               <div className="flex-1 text-xs text-gray-600 space-y-3">
                 <div>
                   <p className="text-[10px] text-gray-400">08:30 AM</p>
-                  <p className="font-semibold text-gray-900">West Campus Dorms</p>
+                  <p className="font-semibold text-gray-900">
+                    West Campus Dorms
+                  </p>
                 </div>
                 <div>
                   <p className="text-[10px] text-gray-400">09:00 AM</p>
-                  <p className="font-semibold text-gray-900">Central Research Lab</p>
+                  <p className="font-semibold text-gray-900">
+                    Central Research Lab
+                  </p>
                 </div>
               </div>
             </div>
@@ -127,7 +167,17 @@ export default function RideSearchPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 text-xs text-gray-500">
                 <span className="flex items-center gap-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
+                  </svg>
                   2 Seats Left
                 </span>
                 <span className="flex items-center gap-1">
@@ -153,11 +203,26 @@ export default function RideSearchPage() {
               />
               <p className="text-xl font-black text-gray-900">$08</p>
             </div>
-            <p className="text-base font-black text-gray-900 mb-1">Sarah Jenkins</p>
-            <p className="text-xs text-gray-400 italic mb-3">"Headed to the library for a late session. Quiet ride, music on request!"</p>
+            <p className="text-base font-black text-gray-900 mb-1">
+              Sarah Jenkins
+            </p>
+            <p className="text-xs text-gray-400 italic mb-3">
+              "Headed to the library for a late session. Quiet ride, music on
+              request!"
+            </p>
             <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
               <span className="flex items-center gap-1">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
                 Starts in 15 mins
               </span>
               <span className="flex items-center gap-1 text-brand font-semibold">
@@ -181,12 +246,18 @@ export default function RideSearchPage() {
             </div>
             <div className="flex-1">
               <div className="flex items-start justify-between">
-                <p className="text-sm font-black text-gray-900">North Campus Loop</p>
+                <p className="text-sm font-black text-gray-900">
+                  North Campus Loop
+                </p>
                 <p className="text-sm font-black text-gray-900">$05</p>
               </div>
-              <p className="text-xs text-gray-400 mb-2 leading-snug">Express shuttle carpool by Dr. Aria. Multiple stops available.</p>
+              <p className="text-xs text-gray-400 mb-2 leading-snug">
+                Express shuttle carpool by Dr. Aria. Multiple stops available.
+              </p>
               <div className="flex items-center gap-2">
-                <span className="text-[9px] font-black bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">FEMALE PREFERRED</span>
+                <span className="text-[9px] font-black bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">
+                  FEMALE PREFERRED
+                </span>
                 <span className="text-xs text-brand font-bold">Details →</span>
               </div>
             </div>
@@ -196,8 +267,13 @@ export default function RideSearchPage() {
         {/* Driving Tomorrow CTA */}
         <section className="mx-4 mb-4">
           <div className="rounded-2xl bg-brand p-6 text-center">
-            <h3 className="text-lg font-black text-white mb-2">Driving Tomorrow?</h3>
-            <p className="text-xs text-red-200 mb-4 leading-relaxed">List your ride and help a fellow student while covering your fuel costs.</p>
+            <h3 className="text-lg font-black text-white mb-2">
+              Driving Tomorrow?
+            </h3>
+            <p className="text-xs text-red-200 mb-4 leading-relaxed">
+              List your ride and help a fellow student while covering your fuel
+              costs.
+            </p>
             <button className="bg-white text-brand font-bold text-sm px-8 py-2.5 rounded-full hover:bg-red-50 transition">
               Post a Ride
             </button>
