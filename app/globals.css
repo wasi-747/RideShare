@@ -6,16 +6,17 @@
 
 :root {
   --brand: #C8102E;
-  --brand-dark: #a00d25;
-  --brand-soft: #fde8ec;
-  --bg-canvas: #F0F0F0;
-  --bg-card: #FFFFFF;
-  --text-primary: #111111;
-  --text-secondary: #777777;
-  --text-muted: #AAAAAA;
-  --border: #E5E5E5;
-  --safety-pink: #ec4899;
-  --salmon: #F28B82;
+  --brand-light: #F9E8EB;
+  --brand-hover: #9B0B21;
+  --surface-bg: #F5F4F0;
+  --surface-card: #FFFFFF;
+  --surface-elevated: #F0EFEB;
+  --ink: #111111;
+  --ink-secondary: #6B6B6B;
+  --ink-muted: #AAAAAA;
+  --border-color: #E8E8E8;
+  --coral: #F28B6E;
+  --teal: #2A9D8F;
 }
 
 * {
@@ -23,15 +24,15 @@
 }
 
 body {
-  background-color: var(--bg-canvas);
-  color: var(--text-primary);
+  background-color: var(--surface-bg);
+  color: var(--ink);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* Mobile phone shell */
 .mobile-shell {
-  @apply mx-auto bg-white overflow-hidden;
+  @apply mx-auto bg-transparent overflow-hidden;
   max-width: 390px;
   min-height: 100vh;
   position: relative;
@@ -39,20 +40,23 @@ body {
 
 /* Shared input style */
 .rs-input {
-  @apply w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition;
+  @apply w-full bg-surface-elevated border border-[var(--border-color)] rounded-2xl px-4 py-3.5 text-[14px] text-[var(--ink)] placeholder-[var(--ink-muted)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 focus:border-[var(--brand)]/60;
 }
 
 /* Primary button */
 .rs-btn {
-  @apply w-full rounded-full bg-red-700 py-4 text-center font-semibold text-white transition hover:bg-red-800 active:scale-95;
+  @apply w-full rounded-2xl px-6 py-4 bg-[var(--brand)] text-white font-semibold text-[15px] shadow-button transition-all duration-200 hover:bg-[var(--brand-hover)] hover:shadow-button-hover active:scale-[0.97];
 }
 
 /* Secondary / outline button */
 .rs-btn-outline {
-  @apply w-full rounded-full border border-gray-300 bg-white py-4 text-center font-semibold text-gray-800 transition hover:bg-gray-50;
+  @apply w-full rounded-2xl px-5 py-3 bg-white text-[14px] text-[var(--ink)] border border-[var(--border-color)] font-medium transition-all duration-200 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:bg-[var(--brand-light)];
 }
 
 /* Card */
 .rs-card {
-  @apply rounded-2xl bg-white border border-gray-100 shadow-sm;
+  @apply rounded-3xl bg-[var(--surface-card)] border border-[var(--border-color)] shadow-card;
 }
+
+/* Toast container placeholder */
+.toast-root { position: fixed; bottom: 20%; left: 50%; transform: translateX(-50%); z-index: 60 }
