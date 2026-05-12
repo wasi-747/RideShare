@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Car,
@@ -9,8 +11,10 @@ import {
   BarChart2,
   MessageSquare,
   Calendar,
+  LogOut,
+  User,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "@/components/BottomNav";
 
 const pageTransition = {
@@ -20,6 +24,26 @@ const pageTransition = {
 };
 
 export default function DashboardView() {
+  const router = useRouter();
+  const [showMenu, setShowMenu] = useState(false);
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const user = JSON.parse(stored);
+        setUserName(user.firstName || "User");
+      }
+    } catch {}
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/");
+  }
+
   return (
     <motion.div
       initial={pageTransition.initial}
@@ -28,7 +52,7 @@ export default function DashboardView() {
       className="mobile-shell flex flex-col bg-[#F5F5F5]"
     >
       {/* Top bar */}
-      <header className="flex items-center justify-between px-5 pt-5 pb-3 bg-white">
+      <header className="flex items-center justify-between px-5 pt-5 pb-3 bg-white relative">
         <div className="flex items-center gap-2">
           <div className="bg-brand rounded-lg p-1.5">
             <Car size={18} className="text-white" strokeWidth={2.5} />
@@ -37,19 +61,64 @@ export default function DashboardView() {
             RideShare
           </span>
         </div>
-        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-100">
-          <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop"
-            alt="Profile"
-            className="w-full h-full object-cover"
-          />
+        <div className="relative">
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-100 focus:outline-none focus:ring-2 focus:ring-brand/30"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          </button>
+
+          {/* Dropdown menu */}
+          <AnimatePresence>
+            {showMenu && (
+              <>
+                {/* Backdrop */}
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setShowMenu(false)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-12 z-50 w-52 rounded-2xl bg-white border border-gray-100 shadow-xl overflow-hidden"
+                >
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-bold text-gray-900">{userName}</p>
+                    <p className="text-xs text-gray-400">Student Account</p>
+                  </div>
+                  <Link
+                    href="/profile"
+                    onClick={() => setShowMenu(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+                  >
+                    <User size={16} className="text-gray-400" />
+                    My Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition"
+                  >
+                    <LogOut size={16} />
+                    Log Out
+                  </button>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
       <div className="flex-1 overflow-y-auto pb-20">
         {/* Greeting + hero */}
         <section className="px-5 pt-5 pb-4 bg-white mb-2">
-          <p className="text-sm text-gray-500 mb-0.5">Welcome back, Alex</p>
+          <p className="text-sm text-gray-500 mb-0.5">Welcome back, {userName}</p>
           <h1 className="text-[1.85rem] font-black text-gray-900 leading-tight">
             Your Academic
             <br />
