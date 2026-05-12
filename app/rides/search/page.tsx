@@ -263,7 +263,10 @@ export default function RideSearchPage() {
                 <span className="text-[9px] font-black bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">
                   FEMALE PREFERRED
                 </span>
-                <Link href="/rides/booking/3" className="text-xs text-brand font-bold">
+                <Link
+                  href="/rides/booking/3"
+                  className="text-xs text-brand font-bold"
+                >
                   Details →
                 </Link>
               </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { CheckCircle } from "lucide-react";
 
 type SeatMode = "seat-number" | "passenger-count";
 
@@ -9,6 +11,9 @@ export default function RideBookingPanel() {
   const [seatNumber, setSeatNumber] = useState("2A");
   const [passengerCount, setPassengerCount] = useState(1);
   const [agreed, setAgreed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const router = useRouter();
 
   const unitPrice = 4;
   const total = useMemo(
@@ -16,6 +21,39 @@ export default function RideBookingPanel() {
       seatMode === "passenger-count" ? unitPrice * passengerCount : unitPrice,
     [seatMode, passengerCount],
   );
+
+  const handleConfirmBooking = async () => {
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setBookingConfirmed(true);
+      // Navigate to dashboard after 2 seconds
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
+    } catch (error) {
+      console.error("Booking failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (bookingConfirmed) {
+    return (
+      <main className="mx-auto flex h-screen max-w-4xl items-center justify-center px-4 sm:px-6">
+        <div className="text-center">
+          <CheckCircle className="mx-auto mb-4 h-16 w-16 text-green-500" />
+          <h1 className="text-2xl font-bold text-gray-900">
+            Booking Confirmed!
+          </h1>
+          <p className="mt-2 text-gray-600">
+            Your ride has been booked. Check your dashboard for details.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -127,10 +165,11 @@ export default function RideBookingPanel() {
           </label>
 
           <button
-            disabled={!agreed}
+            disabled={!agreed || isLoading}
+            onClick={handleConfirmBooking}
             className="mt-4 w-full rounded-md bg-red-500 py-3 text-sm font-bold text-white transition enabled:hover:bg-red-600 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            Confirm Booking
+            {isLoading ? "Processing..." : "Confirm Booking"}
           </button>
         </article>
       </section>
