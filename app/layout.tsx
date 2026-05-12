@@ -36,6 +36,24 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen bg-[#F5F4F0] flex items-start justify-center py-0 sm:py-8">
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(
+                    function(registration) {
+                      console.log('SW registered: ', registration.scope);
+                    },
+                    function(err) {
+                      console.log('SW registration failed: ', err);
+                    }
+                  );
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
