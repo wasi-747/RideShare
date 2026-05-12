@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 type SeatMode = "seat-number" | "passenger-count";
 
@@ -41,7 +42,12 @@ export default function RideBookingPanel() {
 
   if (bookingConfirmed) {
     return (
-      <main className="mx-auto flex h-screen max-w-4xl items-center justify-center px-4 sm:px-6">
+      <motion.main
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto flex h-screen max-w-4xl items-center justify-center px-4 sm:px-6"
+      >
         <div className="text-center">
           <CheckCircle className="mx-auto mb-4 h-16 w-16 text-green-500" />
           <h1 className="text-2xl font-bold text-gray-900">
@@ -51,12 +57,17 @@ export default function RideBookingPanel() {
             Your ride has been booked. Check your dashboard for details.
           </p>
         </div>
-      </main>
+      </motion.main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <motion.main
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="mx-auto max-w-4xl px-4 py-8 sm:px-6"
+    >
       <h1 className="text-2xl font-bold tracking-tight text-gray-900">
         Secure your booking
       </h1>
@@ -91,7 +102,8 @@ export default function RideBookingPanel() {
           <h2 className="text-lg font-bold text-gray-900">Seat Selection</h2>
 
           <div className="mt-4 inline-flex rounded-lg border border-gray-200 bg-gray-100 p-1">
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setSeatMode("passenger-count")}
               className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
                 seatMode === "passenger-count"
@@ -100,8 +112,9 @@ export default function RideBookingPanel() {
               }`}
             >
               Passenger Count
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setSeatMode("seat-number")}
               className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
                 seatMode === "seat-number"
@@ -110,7 +123,7 @@ export default function RideBookingPanel() {
               }`}
             >
               Pick Seat Number
-            </button>
+            </motion.button>
           </div>
 
           {seatMode === "passenger-count" ? (
@@ -164,15 +177,16 @@ export default function RideBookingPanel() {
             I agree to cancellation policies and terms of service.
           </label>
 
-          <button
+          <motion.button
+            whileTap={{ scale: 0.95 }}
             disabled={!agreed || isLoading}
             onClick={handleConfirmBooking}
-            className="mt-4 w-full rounded-md bg-red-500 py-3 text-sm font-bold text-white transition enabled:hover:bg-red-600 disabled:cursor-not-allowed disabled:bg-gray-400"
+            className="mt-4 min-h-[46px] w-full rounded-md bg-red-500 py-3 text-sm font-bold text-white transition enabled:hover:bg-red-600 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
             {isLoading ? "Processing..." : "Confirm Booking"}
-          </button>
+          </motion.button>
         </article>
       </section>
-    </main>
+    </motion.main>
   );
 }

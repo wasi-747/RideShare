@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   Search,
   PlusCircle,
@@ -28,34 +29,38 @@ export default function BottomNav({ active }: { active?: string }) {
       <div className="flex items-center justify-around">
         {tabs.map((tab) => {
           const isActive =
-            active === tab.label ||
-            (!active && pathname === tab.href);
+            active === tab.label || (!active && pathname === tab.href);
           const Icon = tab.icon;
           return (
-            <Link
+            <motion.div
               key={tab.label}
-              href={tab.href}
-              className="flex flex-col items-center gap-0.5 min-w-0 flex-1"
+              whileTap={{ scale: 0.95 }}
+              className="min-w-0 flex-1"
             >
-              <div
-                className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${
-                  isActive ? "bg-brand text-white" : "text-gray-400"
-                }`}
+              <Link
+                href={tab.href}
+                className="flex min-h-[48px] flex-col items-center justify-center gap-0.5"
               >
-                <Icon
-                  size={isActive ? 18 : 16}
-                  strokeWidth={isActive ? 2.5 : 1.8}
-                  className={isActive ? "fill-white" : ""}
-                />
-              </div>
-              <span
-                className={`text-[9px] font-bold tracking-wide truncate ${
-                  isActive ? "text-brand" : "text-gray-400"
-                }`}
-              >
-                {tab.label}
-              </span>
-            </Link>
+                <div
+                  className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
+                    isActive ? "bg-brand text-white" : "text-gray-400"
+                  }`}
+                >
+                  <Icon
+                    size={isActive ? 18 : 16}
+                    strokeWidth={isActive ? 2.5 : 1.8}
+                    className={isActive ? "fill-white" : ""}
+                  />
+                </div>
+                <span
+                  className={`truncate text-[9px] font-bold tracking-wide ${
+                    isActive ? "text-brand" : "text-gray-400"
+                  }`}
+                >
+                  {tab.label}
+                </span>
+              </Link>
+            </motion.div>
           );
         })}
       </div>

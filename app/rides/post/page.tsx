@@ -3,20 +3,34 @@
 import { useState } from "react";
 import { Car, Shield, Clock, Minus, Plus } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
+import { motion } from "framer-motion";
+
+const pageTransition = {
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 export default function RidePostPage() {
   const [seats, setSeats] = useState(3);
   const [femaleOnly, setFemaleOnly] = useState(true);
 
   return (
-    <div className="mobile-shell flex flex-col bg-[#F5F5F5]">
+    <motion.div
+      initial={pageTransition.initial}
+      animate={pageTransition.animate}
+      transition={pageTransition.transition}
+      className="mobile-shell flex flex-col bg-[#F5F5F5]"
+    >
       {/* Top bar */}
       <header className="flex items-center justify-between px-5 pt-5 pb-3 bg-white">
         <div className="flex items-center gap-2">
           <div className="bg-brand rounded-lg p-1.5">
             <Car size={18} className="text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-lg font-black text-brand tracking-tight">RideShare</span>
+          <span className="text-lg font-black text-brand tracking-tight">
+            RideShare
+          </span>
         </div>
         <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-100">
           <img
@@ -30,9 +44,12 @@ export default function RidePostPage() {
       <div className="flex-1 overflow-y-auto pb-20">
         {/* Hero */}
         <section className="px-5 pt-5 pb-4 bg-white mb-2">
-          <p className="text-[11px] font-black text-brand uppercase tracking-widest mb-1">Drive the Campus</p>
+          <p className="text-[11px] font-black text-brand uppercase tracking-widest mb-1">
+            Drive the Campus
+          </p>
           <h1 className="text-[2.2rem] font-black text-gray-900 leading-tight">
-            Offer a<br />New Ride.
+            Offer a<br />
+            New Ride.
           </h1>
           {/* Progress dots */}
           <div className="flex gap-1.5 mt-4">
@@ -46,10 +63,12 @@ export default function RidePostPage() {
         <section className="mx-4 mb-3">
           <div className="rs-card p-4">
             {/* Starting point */}
-            <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
+            <div className="flex items-center gap-3 border-b border-gray-100 pb-3 transition-all duration-200 focus-within:border-brand/50 focus-within:shadow-[0_0_0_4px_rgba(200,16,46,0.12)]">
               <div className="w-2.5 h-2.5 rounded-full bg-brand flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Starting Point</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                  Starting Point
+                </label>
                 <input
                   className="w-full bg-transparent text-sm font-semibold text-brand outline-none placeholder-gray-300"
                   defaultValue="University North Gate"
@@ -57,10 +76,12 @@ export default function RidePostPage() {
               </div>
             </div>
             {/* Destination */}
-            <div className="flex items-center gap-3 pt-3">
+            <div className="flex items-center gap-3 pt-3 transition-all duration-200 focus-within:border-brand/50 focus-within:shadow-[0_0_0_4px_rgba(200,16,46,0.12)]">
               <div className="w-2.5 h-2.5 rounded-full border-2 border-gray-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Where Are You Going?</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                  Where Are You Going?
+                </label>
                 <input
                   className="w-full bg-transparent text-sm font-semibold text-gray-400 outline-none placeholder-gray-300"
                   defaultValue="Downtown Tech Hub"
@@ -73,21 +94,25 @@ export default function RidePostPage() {
         {/* Available Seats */}
         <section className="mx-4 mb-3">
           <div className="rs-card p-4">
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-3">Available Seats</label>
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-3">
+              Available Seats
+            </label>
             <div className="flex items-center justify-between">
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSeats(Math.max(1, seats - 1))}
-                className="w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition"
+                className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-gray-200 transition hover:bg-gray-50"
               >
                 <Minus size={18} className="text-gray-600" strokeWidth={2.5} />
-              </button>
+              </motion.button>
               <span className="text-4xl font-black text-gray-900">{seats}</span>
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSeats(Math.min(8, seats + 1))}
-                className="w-10 h-10 rounded-full bg-brand flex items-center justify-center hover:bg-brand-dark transition"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-brand transition hover:bg-brand-dark"
               >
                 <Plus size={18} className="text-white" strokeWidth={2.5} />
-              </button>
+              </motion.button>
             </div>
           </div>
         </section>
@@ -95,7 +120,9 @@ export default function RidePostPage() {
         {/* Departure Time */}
         <section className="mx-4 mb-3">
           <div className="rs-card p-4">
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Departure Time</label>
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">
+              Departure Time
+            </label>
             <div className="flex items-center gap-2">
               <Clock size={16} className="text-brand" />
               <span className="text-xl font-black text-gray-900">08:30AM</span>
@@ -112,23 +139,37 @@ export default function RidePostPage() {
                   <Shield size={15} className="text-brand" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-gray-900">Female Only Ride</p>
-                  <p className="text-xs text-gray-400 leading-snug mt-0.5">Restrict ride visibility and booking<br />to female students only.</p>
+                  <p className="text-sm font-bold text-gray-900">
+                    Female Only Ride
+                  </p>
+                  <p className="text-xs text-gray-400 leading-snug mt-0.5">
+                    Restrict ride visibility and booking
+                    <br />
+                    to female students only.
+                  </p>
                 </div>
               </div>
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setFemaleOnly(!femaleOnly)}
-                className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 mt-1 ${femaleOnly ? "bg-brand" : "bg-gray-300"}`}
+                type="button"
+                role="switch"
+                aria-checked={femaleOnly}
+                aria-label="Toggle female only ride"
+                className={`mt-1 inline-flex h-6 w-12 flex-shrink-0 items-center rounded-full p-0.5 transition-colors ${femaleOnly ? "bg-brand justify-end" : "bg-gray-300 justify-start"}`}
               >
-                <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${femaleOnly ? "translate-x-6" : "translate-x-0.5"}`} />
-              </button>
+                <span className="h-5 w-5 rounded-full bg-white shadow transition-all" />
+              </motion.button>
             </div>
           </div>
         </section>
 
         {/* Map preview */}
         <section className="mx-4 mb-4">
-          <div className="rounded-2xl overflow-hidden relative" style={{ height: 140 }}>
+          <div
+            className="rounded-2xl overflow-hidden relative"
+            style={{ height: 140 }}
+          >
             <div
               className="w-full h-full"
               style={{
@@ -141,7 +182,9 @@ export default function RidePostPage() {
                 <div className="w-4 h-4 rounded bg-brand flex items-center justify-center">
                   <span className="text-white text-[8px] font-black">🗺</span>
                 </div>
-                <span className="text-xs font-black text-gray-800 uppercase tracking-wider">Optimizing Path</span>
+                <span className="text-xs font-black text-gray-800 uppercase tracking-wider">
+                  Optimizing Path
+                </span>
               </div>
             </div>
           </div>
@@ -149,11 +192,16 @@ export default function RidePostPage() {
 
         {/* Post button */}
         <div className="mx-4 mb-2">
-          <button className="rs-btn text-base">Post Ride</button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            className="rs-btn text-base"
+          >
+            Post Ride
+          </motion.button>
         </div>
       </div>
 
       <BottomNav active="POST" />
-    </div>
+    </motion.div>
   );
 }

@@ -50,12 +50,12 @@ body {
 
 /* Primary button */
 .rs-btn {
-  @apply w-full rounded-2xl px-6 py-4 bg-[var(--brand)] text-white font-semibold text-[15px] shadow-button transition-all duration-200 hover:bg-[var(--brand-hover)] hover:shadow-button-hover active:scale-[0.97];
+  @apply w-full rounded-2xl px-6 py-4 min-h-[46px] bg-[var(--brand)] text-white font-semibold text-[15px] shadow-button transition-all duration-200 hover:bg-[var(--brand-hover)] hover:shadow-button-hover active:scale-[0.97] touch-manipulation;
 }
 
 /* Secondary / outline button */
 .rs-btn-outline {
-  @apply w-full rounded-2xl px-5 py-3 bg-white text-[14px] text-[var(--ink)] border border-[var(--border-color)] font-medium transition-all duration-200 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:bg-[var(--brand-light)];
+  @apply w-full rounded-2xl px-5 py-3 min-h-[44px] bg-white text-[14px] text-[var(--ink)] border border-[var(--border-color)] font-medium transition-all duration-200 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:bg-[var(--brand-light)] touch-manipulation;
 }
 
 /* Card */

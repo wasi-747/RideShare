@@ -6,6 +6,8 @@ import { Booking } from "@/lib/models/Booking";
 import { Review } from "@/lib/models/Review";
 import { requireAuth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 async function checkAdminAccess(request: NextRequest) {
   const authUser = await requireAuth(request);
   if (!authUser) {

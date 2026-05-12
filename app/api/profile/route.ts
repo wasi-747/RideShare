@@ -5,6 +5,8 @@ import { Review } from "@/lib/models/Review";
 import { requireAuth } from "@/lib/auth";
 import { z } from "zod";
 
+export const dynamic = "force-dynamic";
+
 const updateProfileSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
@@ -30,12 +32,12 @@ const updateProfileSchema = z.object({
 // GET - Get user profile
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId?: string } },
+  { params }: { params?: { userId?: string } },
 ) {
   try {
     await connectDB();
 
-    let userId = params.userId;
+    let userId = params?.userId;
 
     // If no userId provided, get current user
     if (!userId) {

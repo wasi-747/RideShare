@@ -1,18 +1,31 @@
+"use client";
+
 import Link from "next/link";
 import { Car, AtSign, Lock, Zap, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="mobile-shell flex flex-col bg-white">
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="mobile-shell flex flex-col bg-white"
+    >
       {/* Header */}
       <header className="flex items-center justify-between px-5 pt-6 pb-2">
         <div className="flex items-center gap-2">
           <div className="bg-brand rounded-lg p-1.5">
             <Car size={18} className="text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-lg font-black text-brand tracking-tight">RideShare</span>
+          <span className="text-lg font-black text-brand tracking-tight">
+            RideShare
+          </span>
         </div>
-        <Link href="/auth/login" className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+        <Link
+          href="/auth/login"
+          className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition"
+        >
           <span className="text-base">←</span> Back to Login
         </Link>
       </header>
@@ -20,11 +33,16 @@ export default function ForgotPasswordPage() {
       {/* Main content */}
       <main className="flex-1 px-6 pt-8 pb-8">
         {/* Headline */}
-        <h1 className="text-4xl font-black text-gray-900 leading-tight mb-1">Security</h1>
-        <h1 className="text-4xl font-black text-brand leading-tight mb-5">First.</h1>
+        <h1 className="text-4xl font-black text-gray-900 leading-tight mb-1">
+          Security
+        </h1>
+        <h1 className="text-4xl font-black text-brand leading-tight mb-5">
+          First.
+        </h1>
 
         <p className="text-sm text-gray-500 leading-relaxed mb-10">
-          Enter your university email to verify your identity and receive a secure password reset link.
+          Enter your university email to verify your identity and receive a
+          secure password reset link.
         </p>
 
         {/* Form card */}
@@ -32,7 +50,7 @@ export default function ForgotPasswordPage() {
           <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-3">
             University Email
           </label>
-          <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 mb-5 focus-within:border-brand transition">
+          <div className="mb-5 flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all duration-200 focus-within:border-brand focus-within:shadow-[0_0_0_4px_rgba(200,16,46,0.14)]">
             <AtSign size={16} className="text-brand flex-shrink-0" />
             <input
               type="email"
@@ -41,9 +59,12 @@ export default function ForgotPasswordPage() {
             />
           </div>
 
-          <button className="rs-btn flex items-center justify-center gap-2">
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            className="rs-btn flex items-center justify-center gap-2"
+          >
             Reset Password <ArrowRight size={16} />
-          </button>
+          </motion.button>
         </div>
 
         {/* Features */}
@@ -73,6 +94,6 @@ export default function ForgotPasswordPage() {
           <span className="text-brand font-semibold">Contact IT Support</span>
         </p>
       </main>
-    </div>
+    </motion.div>
   );
 }

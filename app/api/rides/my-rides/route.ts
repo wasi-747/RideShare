@@ -3,6 +3,8 @@ import { connectDB } from "@/lib/db";
 import { Ride } from "@/lib/models/Ride";
 import { requireAuth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const authUser = await requireAuth(request);
