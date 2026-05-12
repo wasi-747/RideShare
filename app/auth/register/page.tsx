@@ -1,10 +1,88 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Car, Shield, Zap } from "lucide-react";
+import { Car, Shield, Zap, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    studentId: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    gender: "male" as "male" | "female" | "other",
+    password: "",
+    confirmPassword: "",
+  });
+  const [agreed, setAgreed] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function updateField(field: string, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  async function handleRegister() {
+    setError("");
+
+    // Validation
+    if (!form.email || !form.password || !form.firstName || !form.lastName || !form.phone) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    if (!agreed) {
+      setError("Please agree to the Campus Guidelines.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phone: form.phone,
+          gender: form.gender,
+          studentId: form.studentId || undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Registration failed. Please try again.");
+        return;
+      }
+
+      // Store token and user data
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch {
+      setError("Network error. Please check your connection.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -109,57 +187,133 @@ export default function RegisterPage() {
           Join your campus community today.
         </p>
 
+        {/* Error message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 font-medium"
+          >
+            {error}
+          </motion.div>
+        )}
+
         <div className="space-y-3">
           <div>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
-              University ID
+              University ID <span className="text-gray-300">(optional)</span>
             </label>
-            <input className="rs-input" placeholder="STU-123456" />
+            <input
+              className="rs-input"
+              placeholder="STU-123456"
+              value={form.studentId}
+              onChange={(e) => updateField("studentId", e.target.value)}
+            />
           </div>
           <div>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
-              Institutional Email
+              Email *
             </label>
             <input
               className="rs-input"
               type="email"
               placeholder="name@university.edu"
+              value={form.email}
+              onChange={(e) => updateField("email", e.target.value)}
             />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
+                First Name *
+              </label>
+              <input
+                className="rs-input"
+                placeholder="First name"
+                value={form.firstName}
+                onChange={(e) => updateField("firstName", e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
+                Last Name *
+              </label>
+              <input
+                className="rs-input"
+                placeholder="Last name"
+                value={form.lastName}
+                onChange={(e) => updateField("lastName", e.target.value)}
+              />
+            </div>
           </div>
           <div>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
-              Full Legal Name
+              Phone *
             </label>
             <input
               className="rs-input"
-              placeholder="As it appears on campus ID"
+              type="tel"
+              placeholder="+880 1XXX-XXXXXX"
+              value={form.phone}
+              onChange={(e) => updateField("phone", e.target.value)}
             />
           </div>
           <div>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
-              Password
+              Gender *
+            </label>
+            <select
+              className="rs-input appearance-none"
+              value={form.gender}
+              onChange={(e) => updateField("gender", e.target.value)}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
+              Password *
             </label>
             <input
               className="rs-input"
               type="password"
               placeholder="••••••••"
+              value={form.password}
+              onChange={(e) => updateField("password", e.target.value)}
             />
           </div>
           <div>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1 px-1">
-              Confirm Password
+              Confirm Password *
             </label>
             <input
               className="rs-input"
               type="password"
               placeholder="••••••••"
+              value={form.confirmPassword}
+              onChange={(e) => updateField("confirmPassword", e.target.value)}
             />
           </div>
         </div>
 
         {/* Terms */}
         <div className="flex items-start gap-2.5 mt-4 mb-5">
-          <div className="mt-0.5 w-4 h-4 rounded border border-gray-300 flex-shrink-0" />
+          <button
+            onClick={() => setAgreed(!agreed)}
+            className={`mt-0.5 w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
+              agreed
+                ? "bg-brand border-brand"
+                : "border-gray-300 bg-white"
+            }`}
+          >
+            {agreed && (
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4 7L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </button>
           <p className="text-xs text-gray-500 leading-relaxed">
             I agree to the RideShare{" "}
             <span className="text-brand font-semibold">Campus Guidelines</span>{" "}
@@ -167,8 +321,20 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <motion.button whileTap={{ scale: 0.95 }} className="rs-btn">
-          Create Account
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          className="rs-btn flex items-center justify-center gap-2"
+          onClick={handleRegister}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 size={18} className="animate-spin" />
+              Creating Account...
+            </>
+          ) : (
+            "Create Account"
+          )}
         </motion.button>
 
         <p className="text-center text-xs text-gray-500 mt-3">

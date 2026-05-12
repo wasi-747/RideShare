@@ -1,10 +1,53 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Car } from "lucide-react";
+import { Car, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin() {
+    setError("");
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Login failed. Please try again.");
+        return;
+      }
+
+      // Store token and user data
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch {
+      setError("Network error. Please check your connection.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -29,6 +72,17 @@ export default function LoginPage() {
           Please enter your university credentials.
         </p>
 
+        {/* Error message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 font-medium"
+          >
+            {error}
+          </motion.div>
+        )}
+
         <div className="space-y-3 mb-5">
           {/* Institutional Email */}
           <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 transition-all duration-200 focus-within:border-brand/70 focus-within:shadow-[0_0_0_4px_rgba(200,16,46,0.14)]">
@@ -37,8 +91,11 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-transparent text-sm text-gray-900 placeholder-gray-400 outline-none"
               placeholder="student@university.edu"
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
             />
           </div>
 
@@ -57,15 +114,30 @@ export default function LoginPage() {
             </div>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-transparent text-sm text-gray-900 placeholder-gray-400 outline-none"
               placeholder="••••••••"
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
             />
           </div>
         </div>
 
         {/* Primary button */}
-        <motion.button whileTap={{ scale: 0.95 }} className="rs-btn mb-6">
-          Access Portal →
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          className="rs-btn mb-6 flex items-center justify-center gap-2"
+          onClick={handleLogin}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 size={18} className="animate-spin" />
+              Signing in...
+            </>
+          ) : (
+            "Access Portal →"
+          )}
         </motion.button>
 
         {/* Divider */}
