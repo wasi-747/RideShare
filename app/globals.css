@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 
 :root {
-  --brand: #C8102E;
-  --brand-light: #F9E8EB;
-  --brand-hover: #9B0B21;
-  --surface-bg: #F5F4F0;
-  --surface-card: #FFFFFF;
-  --surface-elevated: #F0EFEB;
+  --brand: #c8102e;
+  --brand-light: #f9e8eb;
+  --brand-hover: #9b0b21;
+  --surface-bg: #f5f4f0;
+  --surface-card: #ffffff;
+  --surface-elevated: #f0efeb;
   --ink: #111111;
-  --ink-secondary: #6B6B6B;
-  --ink-muted: #AAAAAA;
-  --border-color: #E8E8E8;
-  --coral: #F28B6E;
-  --teal: #2A9D8F;
+  --ink-secondary: #6b6b6b;
+  --ink-muted: #aaaaaa;
+  --border-color: #e8e8e8;
+  --coral: #f28b6e;
+  --teal: #2a9d8f;
 }
 
 * {
@@ -26,7 +26,12 @@
 body {
   background-color: var(--surface-bg);
   color: var(--ink);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -40,7 +45,7 @@ body {
 
 /* Shared input style */
 .rs-input {
-  @apply w-full bg-surface-elevated border border-[var(--border-color)] rounded-2xl px-4 py-3.5 text-[14px] text-[var(--ink)] placeholder-[var(--ink-muted)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 focus:border-[var(--brand)]/60;
+  @apply w-full bg-surface-elevated border border-[#E8E8E8] rounded-2xl px-4 py-3.5 text-[14px] text-ink placeholder-ink-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand/60;
 }
 
 /* Primary button */
@@ -59,4 +64,10 @@ body {
 }
 
 /* Toast container placeholder */
-.toast-root { position: fixed; bottom: 20%; left: 50%; transform: translateX(-50%); z-index: 60 }
+.toast-root {
+  position: fixed;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+}

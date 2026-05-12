@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 export interface IReview {
   _id?: string;
-  rideId: string;
-  bookingId: string;
-  reviewerId: string;
-  revieweeId: string;
+  rideId: mongoose.Types.ObjectId | string;
+  bookingId: mongoose.Types.ObjectId | string;
+  reviewerId: mongoose.Types.ObjectId | string;
+  revieweeId: mongoose.Types.ObjectId | string;
   rating: number;
   title?: string;
   comment?: string;

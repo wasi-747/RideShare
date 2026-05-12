@@ -1,8 +1,13 @@
-import React from 'react';
+import React from "react";
 
-export const Skeleton: React.FC<{className?: string}> = ({ className = '' }) => {
+export const Skeleton: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
   return (
-    <div className={`rounded-2xl bg-surface-elevated ${className}`} style={{ minHeight: 80 }} />
+    <div
+      className={`rounded-2xl bg-surface-elevated ${className}`}
+      style={{ minHeight: 80 }}
+    />
   );
 };
 

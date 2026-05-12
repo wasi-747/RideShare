@@ -207,8 +207,8 @@ export default function RideSearchPage() {
               Sarah Jenkins
             </p>
             <p className="text-xs text-gray-400 italic mb-3">
-              "Headed to the library for a late session. Quiet ride, music on
-              request!"
+              &quot;Headed to the library for a late session. Quiet ride, music
+              on request!&quot;
             </p>
             <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
               <span className="flex items-center gap-1">

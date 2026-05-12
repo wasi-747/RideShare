@@ -111,7 +111,7 @@ export async function PUT(
           ride.availableSeats += booking.passengerCount;
           // Remove passenger from ride
           ride.passengers = ride.passengers.filter(
-            (p) => p.toString() !== booking.passengerId.toString(),
+            (p: any) => p.toString() !== booking.passengerId.toString(),
           );
           await ride.save();
         }
@@ -183,7 +183,7 @@ export async function DELETE(
     if (ride) {
       ride.availableSeats += booking.passengerCount;
       ride.passengers = ride.passengers.filter(
-        (p) => p.toString() !== booking.passengerId.toString(),
+        (p: any) => p.toString() !== booking.passengerId.toString(),
       );
       await ride.save();
     }
