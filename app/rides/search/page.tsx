@@ -185,9 +185,12 @@ export default function RideSearchPage() {
                   Tesla Model 3
                 </span>
               </div>
-              <button className="bg-brand text-white text-sm font-bold px-5 py-2 rounded-full hover:bg-brand-dark transition">
+              <Link
+                href="/rides/booking/1"
+                className="bg-brand text-white text-sm font-bold px-5 py-2 rounded-full hover:bg-brand-dark transition"
+              >
                 Book
-              </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -230,7 +233,9 @@ export default function RideSearchPage() {
                 Female Only Ride
               </span>
             </div>
-            <button className="rs-btn">Book Now</button>
+            <Link href="/rides/booking/2" className="rs-btn">
+              Book Now
+            </Link>
           </div>
         </section>
 
@@ -258,7 +263,9 @@ export default function RideSearchPage() {
                 <span className="text-[9px] font-black bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">
                   FEMALE PREFERRED
                 </span>
-                <span className="text-xs text-brand font-bold">Details →</span>
+                <Link href="/rides/booking/3" className="text-xs text-brand font-bold">
+                  Details →
+                </Link>
               </div>
             </div>
           </div>
